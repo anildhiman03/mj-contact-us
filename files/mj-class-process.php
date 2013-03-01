@@ -516,19 +516,8 @@ public static function EditFormProcess(){
 	
 	function ManageStoreForms(){
 		switch(ACTION){
-			case 'add':
-				self::addFieldProcess();
-				mjContactHTML::addFieldHtml();
-			break;
-			case 'status':
-				self::updateFieldStatusProcess();
-			break;
-			case 'delete':
-				self::deleteFieldProcess();
-			break;
-			case 'edit':
-				self::editFieldProcess();
-				mjContactHTML::editFieldHtml();
+			case 'view':
+				mjContactHTML::StoreDataDetail();
 			break;
 			default :
 				mjContactHTML::getStoreFormList();

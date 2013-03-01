@@ -553,36 +553,66 @@
 			<table class="widefat">
 			<thead>
 				<tr>
+					<th>Form ID</th>
 					<th>Form Name</th>
-					<th>total Fields</th>		
-					<th>Action</th>
+					<th>Total Fields</th>		
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
+					<th>Form ID</th>
 					<th>Form Name</th>
-					<th>total Fields</th>		
-					<th>Action</th>
+					<th>Total Fields</th>
 				</tr>
 			</tfoot>
 			<tbody>
 <?php
-		 foreach ( $formData as $value){ 
-?>
+		 foreach ( $formData as $value){
+		 ?>
+			   <tr>
+				 <td><?php echo $value['form_ref_id']; ?></td>
+				 <td><a href="<?php echo STOREDDATAVIEW.'='.$value['added_on']; ?>"><?php echo $value['form_name']; ?></a></td>
+				 <td><?php echo $value['total']; ?></td>
+			   </tr>
+		<?php $i++; }  ?>
+			</tbody>
+			</table>
+		</div>
+	<?php }
+	
+	public static function StoreDataDetail(){
+	$formData	=	MjFunctions::StoreDataDetailByDate($_REQUEST['id']);
+	?>
+	<h2><?php _e('Stored Data') ?>	</h2>
+    <div class="clear"></div>
+    <div class='wrap'>
+			<table class="widefat">
+			<thead>
+				<tr>
+					<th>Serial No.</th>
+					<th>Field Name</th>
+					<th></th>
+					<th>Field Value</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>Serial No.</th>
+					<th>Field Name</th>
+					<th></th>
+					<th>Field Value</th>
+				</tr>
+			</tfoot>
+			<tbody>
+<?php $i=1;
+		 foreach ( $formData as $value){
+		 $fieldvalue	=	MjFunctions::getFieldDetail($value['field_ref_id']);
+		 ?>
 			   <tr>
 				 <td><?php echo $i; ?></td>
-				 <td><?php echo $value->form_name; ?></td>
-				 <td><?php echo $value->subject; ?></td>
-				 <td><?php echo $value->email; ?></td>
-				 <td><?php echo $value->email_cc; ?></td>
-				 <td><?php echo $value->email_bcc; ?></td>
-				 <td><?php echo ($value->status) ? 'Enable' : 'Disable'; ?></td>
-				  <td>[mjform id='<?php echo $value->form_id; ?>']</td>
-				 <td>
-					 <a href="<?php echo $status; ?>"><?php echo ($value->status) ? 'Disable' : 'Enable'; ?></a> | 
-					 <a href="<?php echo $edit; ?>" >Edit</a> | 
-					 <a onclick="return (confirm('Are you sure you want to delete this data ?'));" href="<?php echo $delete; ?>" >Delete</a>
-				 </td>
+				 <td><?php echo $fieldvalue['column_name']; ?></td>
+				 <td> : </td>
+				 <td><?php echo $value['form_value']; ?></td>
 			   </tr>
 		<?php $i++; }  ?>
 			</tbody>

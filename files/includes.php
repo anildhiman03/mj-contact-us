@@ -14,7 +14,7 @@ define('EDITFORM' , add_query_arg(array('atn'=>'edit'), admin_url('admin.php?pag
 define('FIELDSURL' , admin_url('admin.php?page=mj-contact-fields'));
 define('ADDFIELD' , add_query_arg(array('atn'=>'add'), admin_url('admin.php?page=mj-contact-fields')));
 define('EDITFIELD' , add_query_arg(array('atn'=>'edit'), admin_url('admin.php?page=mj-contact-fields')));
-//DEFINE('DYNAMICFORM' , add_query_arg(array('atn'=>'edit'), admin_url('admin.php?page=mj-contact-fields')));
+define('STOREDDATAVIEW' , add_query_arg(array('atn'=>'view','id'=>''), admin_url('admin.php?page=mj-store-fields')));
 define('ACTION' , $atn);
 define('WP_CAPTCHA_DIR_URL', plugin_dir_url(__FILE__));
 define('WP_CAPTCHA_DIR', dirname(__FILE__));

@@ -769,11 +769,19 @@ function mj_captcha_init_sessions(){
 	}
 	
 	public static function GetStoreForms(){
-		echo "data";
 		global $wpdb;
 		$tbl1 = $wpdb->prefix . "mj_contact_forms";
 		$tbl2 = $wpdb->prefix . "mj_contact_saved_forms";
-		$query	=	"SELECT count(*) as total,s.form_ref_id,f.form_name FROM $tbl2 s join $tbl1 f on s.form_ref_id=f.form_id group by s.added_on";
+		$query	=	"SELECT count(*) as total,s.form_ref_id,s.added_on,f.form_name FROM $tbl2 s join $tbl1 f on s.form_ref_id=f.form_id group by s.added_on";
+		$data 		= $wpdb->get_results($query, ARRAY_A);
+		return $data;
+	}
+	
+	public static function StoreDataDetailByDate($date	=	'0'){
+		global $wpdb;
+		$tbl1 = $wpdb->prefix . "mj_contact_forms";
+		$tbl2 = $wpdb->prefix . "mj_contact_saved_forms";
+		$query	=	"SELECT s.*,f.form_name FROM $tbl2 s join $tbl1 f on s.form_ref_id=f.form_id where s.added_on='$date'";
 		$data 		= $wpdb->get_results($query, ARRAY_A);
 		return $data;
 	}
