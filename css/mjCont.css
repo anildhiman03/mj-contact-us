@@ -155,3 +155,5 @@ label.error{text-align: right;}
 .fl{float:left; clear:both;}
 .message{color: #000000;}
 .fieldBlock{width: 53%;}
+#mjContact table td{height: 40px;}
+#mjContact table td:first-child{font-weight:bold;}

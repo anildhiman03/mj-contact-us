@@ -21,7 +21,7 @@ add_action('init', '_init_sessions');
 
 function my_jquery_enqueue() {
    //wp_deregister_script('mjform');
-   wp_register_script( 'JSmj', plugins_url( '/js/mjCon.js', __FILE__ ),'','1.0'  );
+   wp_register_script( 'JsMj', plugins_url( '/js/mjCon.js', __FILE__ ),__FILE__,'1.0'  );
    wp_register_script( 'jQuery.validation', plugins_url( '/js/jquery.validate.js', __FILE__ ) );
    wp_enqueue_script('jquery');
    wp_enqueue_script('JsMj');

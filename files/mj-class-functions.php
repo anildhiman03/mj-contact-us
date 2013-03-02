@@ -56,8 +56,8 @@ class MjFunctions{
 	}
 	
 	
-	public static function message(){
-		$MSG	=	(isset($_REQUEST['MSG'])) ? $_REQUEST['MSG']: '';
+	public static function message($code = ''){
+		$MSG	=	(isset($_REQUEST['MSG'])) ? $_REQUEST['MSG']: $code;
 		switch($MSG){
 			case 'A01BC':
 				echo "<div class='updated p-12' id='message'><div class='p-12'>Success : Data saved Successfully</div></div>";
@@ -107,6 +107,9 @@ class MjFunctions{
 			    break;
 			case 'DELETED':
                 echo "<div class='updated p-12' id='message'><div class='p-12'>Success : Data Deleted Successfully !</div></div>";
+			    break;
+			case 'NO-CHANGE':
+                echo "<div class='updated p-12' id='message'><div class='p-12'>Success : No Data Changed !</div></div>";
 			    break;
 			default:
 			break;
@@ -436,23 +439,24 @@ class MjFunctions{
 
 			global $wpdb;
             $table_name = $wpdb->prefix . "mj_contact_forms";
-
-            if(isset($_POST['formname']) && empty($_POST['formname'])){
+			$formName	=	self::FormTrim($_POST['formname']);
+			$formId		=	self::FormTrim($_POST['formid']);
+            if(isset($formName) && empty($formName)){
                 return "EmptyFormName";
-            }elseif(isset($_POST['formid']) && empty($_POST['formid'])){
+            }elseif(isset($formId) && empty($formId)){
                 return "EmptyFormId";
             }
-            $formName	=	$_POST['formname'];
-            $formId		=	$_POST['formid'];
+
             $Subject	=	$_POST['subject'];
             $Email		=	$_POST['email'];
             $EmailCc	=	$_POST['email_cc'];
             $EmailBcc	=	$_POST['email_bcc'];
             $Status		=	$_POST['status'];
             $Saved		=	$_POST['saved'];
+            $sendMail	=	$_POST['sendMail'];
             $AddedBy	=	get_current_user_id();
             $Insert		=	$wpdb->query( $wpdb->prepare(
-                "INSERT INTO $table_name (form_name, form_div_id, subject, email, email_cc, email_bcc, status, saved, added_by) VALUES ( %s, %s, %s, %s, %s, %s, %d, %d, %d )",
+                "INSERT INTO $table_name (form_name, form_div_id, subject, email, email_cc, email_bcc, status, saved, sendmail, added_by) VALUES ( %s, %s, %s, %s, %s, %s, %d, %d, %d, %d )",
                 array(
                     $formName,
                     $formId,
@@ -462,6 +466,7 @@ class MjFunctions{
                     $EmailBcc,
                     $Status,
                     $Saved,
+					$sendMail,
                     $AddedBy
                 )
             ));
@@ -479,23 +484,22 @@ class MjFunctions{
             global $wpdb;
             $table_name = $wpdb->prefix . "mj_contact_forms";
 
-            if(isset($_POST['formname']) && empty($_POST['formname'])){
+            $formName	=	self::FormTrim($_POST['formname']);
+			$formId		=	self::FormTrim($_POST['formid']);
+            if(isset($formName) && empty($formName)){
                 return "EmptyFormName";
-            }elseif(isset($_POST['formid']) && empty($_POST['formid'])){
+            }elseif(isset($formId) && empty($formId)){
                 return "EmptyFormId";
             }
-
-            $formName	=	$_POST['formname'];
-            $formId		=	$_POST['formid'];
 			$Subject	=	$_POST['subject'];
             $Email		=	$_POST['email'];
 			$EmailCc	=	$_POST['email_cc'];
             $EmailBcc	=	$_POST['email_bcc'];
             $Status		=	$_POST['status'];
             $Saved		=	$_POST['saved'];
+            $sendMail	=	$_POST['sendMail'];
             $Id			=	$_POST['id'];
-            $Insert		=	$wpdb->query( $wpdb->prepare(
-                "update $table_name set `form_name`=%s,`form_div_id`=%s,`subject`=%s,`email`=%s,`email_cc`=%s,`email_bcc`=%s,`status`='%d',`saved`='%d' where `form_id`='%d'"
+			$query		=	 $wpdb->prepare("update $table_name set `form_name`=%s,`form_div_id`=%s,`subject`=%s,`email`=%s,`email_cc`=%s,`email_bcc`=%s,`status`='%d',`saved`='%d',`sendmail`='%d' where `form_id`='%d'"
                 ,array(
                     $formName,
                     $formId,
@@ -505,9 +509,11 @@ class MjFunctions{
                     $EmailBcc,
                     $Status,
                     $Saved,
+                    $sendMail,
                     $Id,
                 )
-            ));
+            );
+            $Insert		=	$wpdb->query($query);
             return $Insert;
         }
         return false;
@@ -785,5 +791,11 @@ function mj_captcha_init_sessions(){
 		$data 		= $wpdb->get_results($query, ARRAY_A);
 		return $data;
 	}
-
+	public static function FormTrim($str)
+	{
+		return trim(preg_replace('/\s+/', ' ', $str));
+	}
+	public static function setval($value	=	''){
+		return (isset($_REQUEST[$value]) && !empty($_REQUEST[$value])) ? $_REQUEST[$value] : ''; 
+	}
 }

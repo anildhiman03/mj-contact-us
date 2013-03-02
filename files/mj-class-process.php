@@ -326,12 +326,13 @@
                 default:
                     $errorCode  =   'E-FRM-INVALID';
             }
-            MjFunctions::mRedirect($errorCode,ADDFORM);
+            MjFunctions::message($errorCode);  //MjFunctions::mRedirect($errorCode,ADDFORM);
         }
     }
     
 public static function EditFormProcess(){
-        $Response    =   MjFunctions::EditForm();
+        $Response	=	'';
+		$Response    =   MjFunctions::EditForm();
         if($Response){
             switch($Response){
                 case "EmptyFormName":
@@ -347,8 +348,8 @@ public static function EditFormProcess(){
                     $errorCode  =   'E-FRM-INVALID';
                     break;
             }
-            $url    =   add_query_arg(array('id'=>$_REQUEST['id']), EDITFORM);
-            MjFunctions::mRedirect($errorCode,$url);
+			#$url    =   add_query_arg(array('id'=>$_REQUEST['id']), EDITFORM);
+            MjFunctions::message($errorCode);	#MjFunctions::mRedirect($errorCode,$url);
         }
     }
 	

@@ -75,7 +75,16 @@ var dynamicForm	=	function (){
     });
     return false;
 }
- jQuery(document).ready(function($) {
+jQuery(document).ready(function($) {
+	
 	$(".btnsubmit").bind("submit",dynamicForm);
+	/* admin send mail error */
+	$('.sendMail').click(function(){
+		if($(this).val()==1){
+			$('.emailtd').show();
+		$('#email,#email_cc,#email_bcc').val();
+		}else{
+			$('.emailtd').hide();
+		}
+	});
 }); 
-
