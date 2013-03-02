@@ -22,5 +22,6 @@ define('WP_CAPTCHA_DIR', dirname(__FILE__));
 include( plugin_dir_path( __FILE__ ) . '/mj-class-functions.php');
 include( plugin_dir_path( __FILE__ ) . '/mj-class-process.php');
 include( plugin_dir_path( __FILE__ ) . '/mj-class-html.php');
+include( plugin_dir_path( __FILE__ ) . '/db.php');
 
 ?>
