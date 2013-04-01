@@ -119,12 +119,13 @@
                         </table>
                         <p>=============================================================</p>
                         <p>Thanks & Regards</p>
+						<p>".get_bloginfo()."</p>	
                     </body>
                 </html>
                 ";
                 $headers  = 'MIME-Version: 1.0' . "\r\n";
                 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-                $headers .= 'From: '.$to.'' . "\r\n" .
+                $headers .= 'From: '.get_bloginfo().'<'.$to.'>' . "\r\n" .
                 'Reply-To: '.$to.'' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
@@ -155,13 +156,8 @@
 					$subject 	=	(empty($subject))? "Contact Us mail" : $subject;
 					
 				
-					$message = "
-					<html>
-						<head>
-							<title>Contact US Mail</title>
-						</head>
-						<body>
-							<p>Hello Admin<br/></p>
+					$msg = "
+							<p>Hello Admin</p>
 							<p>Please find the details of contact us mail send by a new user</p>
 							<p>=============================================================</p>
 							<table>
@@ -185,24 +181,25 @@
 									<th>Comment : </th>
 									<td>{$comment}</td>
 								</tr>
-								
 							</table>
 							<p>=============================================================</p>
-							<p>Thanks & Regards</p>
-						</body>
-					</html>
-					";
-						self::sendEmail("admin", $email, $to, $subject, $message, $_FILES['file']);
-					echo "<div class='updatedcss' id='message'> Mail Sent Successfully</div>";
+							<p>Thanks & Regards</p>";
+							$msg="this is testing message";
+						$response = self::sendEmail($name, $email, $to, $subject, $msg, $_FILES['file']);
+					if($response){
+						echo "<div class='updatedcss' id='message'> Mail Sent Successfully</div>";
+					}else{
+						echo "<div class='Eerror p-12' id='message'> Error: Mail Not Sent. Please try again later</div>";
+					}
 				}else{
-					echo "<div class='error p-12' id='message'>Please Upload Files</div>";
+					echo "<div class='Eerror p-12' id='message'>Please Upload Files</div>";
 				}
 		    }else{
-                echo "<div class='error p-12' id='message'>Invalid Captcha</div>";
+                echo "<div class='Eerror p-12' id='message'>Invalid Captcha</div>";
             }
 	}
 	
-	function sendEmail($name, $email, $to_mail, $subject, $msg, $attachment = "") {
+	 function sendEmail($name, $email, $to_mail, $subject, $msg, $attachment = "") {
 			$sending = false;
 
 			if (!empty($attachment['tmp_name']) && !empty($attachment['error'])) $attachment['tmp_name'] = "";
@@ -215,12 +212,9 @@
 
 			if ($sending) {
 				$eol = "\n";
-
 				$tosend['email'] = $to_mail;
 				$tosend['subject'] = $subject;
-
-				$tosend['message'] = "
-					<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+				$tosend['message'] = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 					<html>
 					<head>
 					<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
@@ -257,16 +251,20 @@
 					$tosend['headers'] .= $content."".$eol.$eol;
 					$tosend['headers'] .= "--PHP-mixed-".$uid."--";
 					$tosend['message'] = "";//-- The message is already in the headers.
-				}
-
-				if (mail($tosend['email'], $tosend['subject'], $tosend['message'] , $tosend['headers']))
+				} 
+				$sent	=	mail($tosend['email'],$tosend['subject'],$tosend['message'],$tosend['headers']);
+				if ($sent)
 					return true;
 				else
 					return false;
 			}
     return false;
-	}
+	} 
 	
+	
+	
+
+
 	function AdminOptionProcess(){
 		if(isset($_POST['MJact']) && $_POST['MJact']=="insert"){
 			$MJmailto		=	(!empty($_POST['MJmailto'])) ? $_POST['MJmailto'] : get_option('admin_email');

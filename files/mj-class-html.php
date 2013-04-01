@@ -2,6 +2,7 @@
 	
 	public  function mjForm(){
 	global $post;
+	
 	?>
 	<div>
 
@@ -101,7 +102,7 @@
 						<input type="checkbox" class="w-16" name="MJsubject" <?php echo (get_option('MJsubject')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Subject ?') ;?><br/>
 						<input type="checkbox" class="w-16" name="MJwebsite" <?php echo (get_option('MJwebsite')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Website ?') ;?><br/>
 						<input type="checkbox" class="w-16" name="MJcomment" <?php echo (get_option('MJcomment')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Comment ?') ;?><br/>
-						<input type="checkbox" class="w-16" name="MJattachment" <?php echo (get_option('MJattachment')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Enable  Attachment ?') ;?><br/>
+						<!--<input type="checkbox" class="w-16" name="MJattachment" <?php echo (get_option('MJattachment')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Enable  Attachment ?') ;?><br/>-->
                         <input type="radio" class="w-16" name="mjEnableCaptcha" <?php echo (get_option('mjEnableCaptcha')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Enable  number captcha') ;?><br/>
                         <input type="radio" class="w-16" name="mjEnableCaptcha" <?php echo (get_option('mjEnableCaptcha')==0)? "checked='checked'" : "";?> value="0"><?php _e(' - Enable  string captcha') ;?><br/>
 					</div>
@@ -283,20 +284,20 @@
                     
 					<tr class="emailtd">
 						<td><label for="subject">Subject: </label></td>
-						<td><input id="subject" maxlength="45" size="30" name="subject" value="" /></td>
+						<td><input id="subject" maxlength="45" size="30" name="subject" value="<?php echo MjFunctions::setval('subject'); ?>" /></td>
 					</tr>
                     
 					<tr class="emailtd">
 						<td><label for="emailto">Email Address (To): </label></td>
-						<td><input id="email" maxlength="45" size="30" name="email" value="" /></td>
+						<td><input id="email" maxlength="45" size="30" name="email" value="<?php echo MjFunctions::setval('email'); ?>" /></td>
 					</tr>
 					<tr class="emailtd">
 						<td><label for="emailcc">Email Address (Cc): </label></td>
-						<td><input id="email_cc" maxlength="45" size="30" name="email_cc" value="" /></td>
+						<td><input id="email_cc" maxlength="45" size="30" name="email_cc" value="<?php echo MjFunctions::setval('email_cc'); ?>" /></td>
 					</tr>
 					<tr class="emailtd">
 						<td><label for="emailbcc">Email Address (Bcc): </label></td>
-						<td><input id="email_bcc" maxlength="45" size="30" name="email_bcc" value="" /></td>
+						<td><input id="email_bcc" maxlength="45" size="30" name="email_bcc" value="<?php echo MjFunctions::setval('email_bcc'); ?>" /></td>
 					</tr>
 					<tr>	
 						<td><label for="status">Status: </label></td>

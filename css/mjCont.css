@@ -157,3 +157,14 @@ label.error{text-align: right;}
 .fieldBlock{width: 53%;}
 #mjContact table td{height: 40px;}
 #mjContact table td:first-child{font-weight:bold;}
+
+.Eerror {
+background: none repeat scroll 0 0 #EEE;
+border: 1px solid #D3D3D3;
+border-radius: 3px 3px 3px 3px;
+margin: 0 auto 1.625em;
+padding: 0.625em;
+position: relative;
+width: 94.9%;
+color: #000;
+}
