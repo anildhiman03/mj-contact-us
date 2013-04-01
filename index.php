@@ -34,7 +34,7 @@ function my_jquery_enqueue() {
 function mj_contact_us(){
     $MjObj	=	new mjContactHTML;
     $MjObj->SendMail();
-    $MjObj->mjForm();
+    echo $MjObj->mjForm();
 }
 function AdminIndex(){
 	add_menu_page('Contact US', 'Contact US', 'manage_options', 'mj-mainpage', 'AdminMainPage');

@@ -2,84 +2,84 @@
 	
 	public  function mjForm(){
 	global $post;
+	$namelbl			=	(get_option('MJname')==1)? '*' : '';
+	$namefld			=	(get_option('MJname')==1)? 'required' : '';
+	$emaillbl			=	(get_option('MJemail')==1)? "*" : "";
+	$emailfld			=	(get_option('MJemail')==1)? 'required' : '';
+	$subjectlbl			=	(get_option('MJsubject')==1)? "*" : "";
+	$subjectfld			=	(get_option('MJsubject')==1)? "required" : "";
+	$websitelbl			=	(get_option('MJwebsite')==1)? "*" : "";
+	$websitefld			=	(get_option('MJwebsite')==1)? "required" : "";
+	$commentlbl			=	(get_option('MJcomment')==1)? "*" : "";
+	$commentfld			=	(get_option('MJcomment')==1)? "required" : "";
 	
-	?>
-	<div>
+	$form	=	"<div>
 
-	<script type="text/javascript">
+	<script type='text/javascript'>jQuery(document).ready(function() { jQuery('#mailform').validate(); }); </script>
 
-	jQuery(document).ready(function() {
-		jQuery("#mailform").validate();
-	});
-	</script>
+		<div id='container' class='mjcontactus'>
+			<h3 id='reply-title'><?php _e('Contact US') ;?></h3>
+			<form action=".get_permalink($post->ID)." method='post' id='mailform' enctype='multipart/form-data'>
+				<div class='h-71'>
+					<label for='name'>".__('Name')." $namelbl</label>
+					<input $namefld name='uname' id='uname' type='name' aria-required='true'>	
+				</div>";
+				$form	.=	"<div class='h-71'>
+					<label for='email'>".__('E-mail')." $emaillbl</label>
+					<input id='email' $emailfld name='email' type='email' aria-required='true'>
+				</div>";
+				$form	.=	"<div class='h-71'>
+					<label for='subject'>".__('Subject')." $subjectlbl</label>
+					<input id='subject' $subjectfld name='subject' type='subject' size='30' aria-required='true'>
+				</div>";
+				$form	.=	"<div class='h-71'>
+					<label for='url'>".__('Website')." $websitelbl</label>
+					<input id='url' $websitefld name='url' type='url' value='' aria-required='true'>
+				</div>";
+				$form	.=	"<div class='h-134'>
+					<label for='message'>".__('Comment')."  $commentlbl</label>
+					<textarea id='comment' name='comment' $commentfld cols='' rows=''></textarea>
+				</div>";
+				if(get_option('MJcopytome')==1): 
+					$form	.=	"<div class='h-71'>
+						<label for='message'>".__('Send copy to me')."</label>
+						<input type='checkbox' name='copytome' class='w-16' id='copytome' value='1'>
+					</div>";
+				endif;
 
-
-
-			<div id="container" class="mjcontactus">
-			<h3 id="reply-title"><?php _e('Contact US') ;?></h3>
-			<form action="<?php echo get_permalink($post->ID); ?>" method="post" id="mailform" enctype="multipart/form-data">
-				<div class="h-71">
-					<label for="name"><?php _e('Name') ;?><?php echo (get_option('MJname')==1)? "*" : "";?></label>
-					<input  <?php echo (get_option('MJname')==1)? "required='required'" : "";?> name="uname" id="uname" type="name" aria-required="true" >
-					
-				</div>
-				<div class="h-71">
-					<label for="email"><?php _e('E-mail') ;?><?php echo (get_option('MJemail')==1)? "*" : "";?></label>
-					<input id="email" <?php echo (get_option('MJemail')==1)? "required" : "";?> name="email" type="email" aria-required="true">
-					
-				</div>
-				<div class="h-71">
-					<label for="subject"><?php _e('Subject') ;?><?php echo (get_option('MJsubject')==1)? "*" : "";?></label>
-					<input id="subject" <?php echo (get_option('MJsubject')==1)? "required" : "";?> name="subject" type="subject" size="30" aria-required="true">
-					
-				</div>
-				<div class="h-71">
-					<label for="url"><?php _e('Website') ;?><?php echo (get_option('MJwebsite')==1)? "*" : "";?></label>
-					<input id="url" <?php echo (get_option('MJwebsite')==1)? "required" : "";?> name="url" type="url" value=""  aria-required="true">
-				</div>
-				<div class="h-134">
-					<label for="message"><?php _e('Comment') ;?><?php echo (get_option('MJcomment')==1)? "*" : "";?></label>
-					<textarea id="comment" name="comment" <?php echo (get_option('MJcomment')==1)? "required" : "";?> cols="" rows=""></textarea>
-				</div>
-				<?php if(get_option('MJcopytome')==1):?>
-				<div class="h-71">
-					<label for="message"><?php _e('Send copy to me') ;?></label>
-					<input type="checkbox" name="copytome" class="w-16" id="copytome" value="1">
-				</div>
-				<?php endif; ?>
-
-                <?php if(get_option('mjEnableCaptcha')==1){ ?>
-                    <div class="h-71">
-                        <label for="message"><?php _e('Captcha : '. MjFunctions::MathCaptcha()) ;?></label>
-                        <input id="captcha" required name="captcha" type="number" value=""  aria-required="true">
+                if(get_option('mjEnableCaptcha')==1){
+                    $form	.=	"<div class='h-71'>
+                        <label for='message'>".__('Captcha : '. MjFunctions::MathCaptcha())."</label>
+                        <input id='captcha' required name='captcha' type='number' value=''  aria-required='true'>
                     </div>
-                <input type="hidden" name="CODEINCODE" value="<?php echo MjFunctions::BaseIncode(); ?>">
-				<?php } elseif(get_option('mjEnableCaptcha')==0){ ?>
-                <div class="h-71">
-                    <label for="message"><?php echo '<img src="'.WP_CAPTCHA_DIR_URL.'captcha_code_file.php?s=single&rand='.rand().'" />'; ?></label>
-                    <input id="captcha" required name="captcha" type="text" value=""  aria-required="true">
-                </div>
-                <?php } ?>
+                <input type='hidden' name='CODEINCODE' value=".MjFunctions::BaseIncode().">";
+					} elseif(get_option('mjEnableCaptcha')==0){
+                $form	.=	"<div class='h-71'>
+                    <label for='message'><img src=".WP_CAPTCHA_DIR_URL.'captcha_code_file.php?s=single&rand='.rand()." /></label>
+                    <input id='captcha' required name='captcha' type='text' value=''  aria-required='true'>
+                </div>";
+					}
 
-                <!--$_SESSION['captcha_code']-->
-                <?php if(get_option('MJattachment')):?>
-					<div class="h-71">
-						<label for="message"><?php _e('Upload Files') ;?></label>
-						<input type="file" name="file" id="file" />
-					</div>
-				<?php endif; ?>
+
+                if(get_option('MJattachment')):
+					$form	.=	"<div class='h-71'>
+						<label for='message'>".__('Upload Files')."</label>
+						<input type='file' name='file' id='file' />
+					</div>";
+				 endif;
 				
-				<div>
+				$form	.=	"<div>
 				
-                    <input name="mj_submit" type="submit" id="submit" value="<?php _e('Send') ;?>">
-					<input type="hidden" name="mj_submit" value="active">
-					<input type="hidden" name="page_id" value="<?php echo $post->ID; ?>">
+                    <input name='mj_submit' type='submit' id='submit' value=".__('Send').">
+					<input type='hidden' name='mj_submit' value='active'>
+					<input type='hidden' name='page_id' value=".$post->ID.">
 
 				</div>
 			</form>
 		</div>	
-			</div>
-	<?php
+			</div>";
+			return $form;
+	
 	}
 	function AdminOption(){ ?>
 		<div id="wrap">
