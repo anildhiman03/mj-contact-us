@@ -1,15 +1,15 @@
-<?php
-/*
-Plugin Name: MJ Contact us
-Plugin URI: http://mecontact.wordpress.com/mj-contact-us-plugin/
-Description: mj contact us a simple form with 4-5 fields to send email address to admin . its a simple contact us form with easy to customize coding standard and easy to customize html standard. <strong>add this code</strong> [mjcontactus] <strong>in page from admin section to activate plugin form also be sure that you have get_header() function in your header file so that validation can be work properly</strong>
-Author: anil kumar
-Version: 5.2.1
+<?php
+/*
+Plugin Name: MJ Contact us
+Plugin URI: http://mecontact.wordpress.com/mj-contact-us-plugin/
+Description: mj contact us a simple form with 4-5 fields to send email address to admin . its a simple contact us form with easy to customize coding standard and easy to customize html standard. <strong>add this code</strong> [mjcontactus] <strong>in page from admin section to activate plugin form also be sure that you have get_header() function in your header file so that validation can be work properly</strong>
+Author: anil kumar
+Version: 5.2.2
 Author URI: http://about.me/anilDhiman
 */
 
 global $MjCon_db_version;
-$MjCon_db_version = "5.2.1";
+$MjCon_db_version = "5.2.2";
 
 include( plugin_dir_path( __FILE__ ) . 'files/includes.php');
 add_action("wp_enqueue_scripts", "my_jquery_enqueue"); 

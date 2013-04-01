@@ -4,7 +4,7 @@ Donate link: http://mecontact.wordpress.com/mj-contact-us-plugin/
 Tags: contact us, simple and easy contact us form, contact us form, contact form, wordpress contact form, wordpress simple contact us form, javascript contact us form, customizable contact us form, captcha contact us form, numeric captcha, file upload, send attachment with mail.
 Requires at least: 3.0.1
 Tested up to: 3.5
-Stable tag: 5.2
+Stable tag: 5.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,8 +25,7 @@ these are some of features that this plugin consist</p>
 <li> - fast form </li>
 <li> - easy to add new fields by customising form</li>
 <li> - easy to understand coding standard</li>
-<li> - contact us with numeric captcha</li>
-<li> - contact us with file upload and send attachment with mail</li>
+<li> - contact us with numeric captcha</li><li> - cotact us with string captcha </li><li> - contact us form with dynamic form creation capability </li><li> - contact us form with dynamic fields creation capability </li><li> - contact us form with save dynamic form capability </li>
 </ul>
 
 == Installation ==
@@ -56,10 +55,10 @@ yes this is totally competible with IE/mozilla and chrome
 
 1. Simple contact us form screen shot.
 2. Validation view of form.
-3. Admin area for setting.
+3. Admin area for setting.4. Add dynamic form area.5. Add only save Data form.6. Manage dynamic created forms.7. Create dynamic fields for forms.8. Manage Fields area.9. Manage Saved form area.
 
 == Changelog ==
-
+= 5.2.2 = * resolve issue "When I/anyone submits a form i get the following error ,Warning: mail() [function.mail]: Bad parameters to mail() function, mail not sent. in /home/content/72/10314672/html/setpforwardpak/wp-content/plugins/mj-contact-us/files/mj-class-process.php on line 246" * resolved issue "I'm working on adding a form to a site that needs to use a bit of data out of the WP DB. The only issue I had was the plugin does not draw itself where it is called with the shortcode, instead it is drawing itself at the top of the page. I'm just getting back to it today, so I'm not clear if it is a CSS issue or something else.I'm getting notices on updates to this thread so I'll watch for you.I really like your idea here, editing the code directly for customization is a simple and direct method for a simple task like this, it makes it smaller, tighter and faster, all good things :)" * added multiple form capability * added mulitple form field added capability. * added save form capability 
 = 5.2 =
  * added admin options
  * validations are optional
