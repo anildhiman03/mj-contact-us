@@ -1,151 +1,100 @@
-<?php class mjContactPRO{
+<?php
+class mjContactPRO
+{
+    use Mbase;
 
-	public static function SendMail(){
-
-		if(isset($_POST['mj_submit']) && $_POST['mj_submit']=="active"){
-			if(get_option('MJattachment')){
-				self::SimpleMailWithAttachment();
-			}else{
-				self::SimpleMail();
-			}
-			
+	public function SendMail()
+    {
+		if (isset($_POST['mj_submit']) && $_POST['mj_submit'] == "active") {
+            $this->SimpleMail();
         }
 	}
 	
-	protected function copytome(){
-		if(isset($_REQUEST['copytome']) && $_REQUEST['copytome']=='1'){
-			$name		=	strip_tags($_REQUEST['uname']);
-			$email		=	$_REQUEST['email'];
-			$subject	=	strip_tags($_REQUEST['subject']);
-			$url		=	strip_tags($_REQUEST['url']);
-			$comment	=	strip_tags($_REQUEST['comment']);
-			$to			=	$email;
-			$subject 	=	(empty($subject))? "Contact Us mail" : $subject;
-			$message = "
-			<html>
-				<head>
-					<title>Contact US Mail</title>
-				</head>
-				<body>
-					<p>Hello user<br/></p>
-					<p>Please find the details of contact us mail send by you to admin</p>
-					<p>=============================================================</p>
-					<table>
-						<tr>
-							<th>Name : </th>
-							<td>{$name}</td>
-						</tr>
-						<tr>
-							<th>Email : </th>
-							<td>{$email}</td>
-						</tr>
-						<tr>
-							<th>Subject : </th>
-							<td>{$subject}</td>
-						</tr>
-						<tr>
-							<th>Website : </th>
-							<td>{$url}</td>
-						</tr>
-						<tr>
-							<th>Comment : </th>
-							<td>{$comment}</td>
-						</tr>
-					</table>
-					<p>=============================================================</p>
-					<p>Thanks & Regards</p>
-				</body>
-			</html>
-			";
-			$headers  = 'MIME-Version: 1.0' . "\r\n";
-			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: '.$to.'' . "\r\n" .
-			'Reply-To: '.$to.'' . "\r\n" .
-			'X-Mailer: PHP/' . phpversion();
-			
-			wp_mail($to,$subject,$message,$headers);
-		
-		}
-	}
-
-	public static function SimpleMail(){
-        $mjEnableCaptcha    =   get_option('mjEnableCaptcha');
-
-        if(isset($mjEnableCaptcha) && $mjEnableCaptcha=='1') {
-            $validate   =   self::numberCaptchaValidate();
-        }else{
-            $validate   =   self::stringCaptchaValidate('single');
-        }
-
-		if($validate){
-                self::copytome();
-                $name		=	strip_tags($_REQUEST['uname']);
-                $email		=	$_REQUEST['email'];
-                $subject	=	strip_tags($_REQUEST['subject']);
-                $url		=	strip_tags($_REQUEST['url']);
-                $comment	=	strip_tags($_REQUEST['comment']);
-                $to			=	(get_option('MJmailto')) ? get_option('MJmailto') : get_option('admin_email');
-                $subject 	=	(empty($subject))? "Contact Us mail" : $subject;
-                $message = "
-                <html>
-                    <head>
-                        <title>Contact US Mail</title>
-                    </head>
-                    <body>
-                        <p>Hello Admin<br/></p>
-                        <p>Please find the details of contact us mail send by a new user</p>
-                        <p>=============================================================</p>
-                        <table>
-                            <tr>
-                                <th>Name : </th>
-                                <td>{$name}</td>
-                            </tr>
-                            <tr>
-                                <th>Email : </th>
-                                <td>{$email}</td>
-                            </tr>
-                            <tr>
-                                <th>Subject : </th>
-                                <td>{$subject}</td>
-                            </tr>
-                            <tr>
-                                <th>Website : </th>
-                                <td>{$url}</td>
-                            </tr>
-                            <tr>
-                                <th>Comment : </th>
-                                <td>{$comment}</td>
-                            </tr>
-                        </table>
-                        <p>=============================================================</p>
-                        <p>Thanks & Regards</p>
-						<p>".get_bloginfo()."</p>	
-                    </body>
-                </html>
-                ";
-                $headers  = 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-                $headers .= 'From: '.get_bloginfo().'<'.$to.'>' . "\r\n" .
-                'Reply-To: '.$to.'' . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-
-                wp_mail($to,$subject,$message,$headers);
-                echo "<div class='updatedcss' id='message'> Mail Sent Successfully</div>";
-		    }else{
-                echo "<div class='error p-12' id='message'>Invalid Captcha</div>";
+	private function copyToMe()
+    {
+			$name = strip_tags($_REQUEST['uname']);
+			$email = $_REQUEST['email'];
+			$subject = strip_tags($_REQUEST['subject']);
+			$url = strip_tags($_REQUEST['url']);
+			$comment = strip_tags($_REQUEST['comment']);
+			$to = $email;
+			$subject = (empty($subject)) ? __('Contact Us Mail', 'mj-contact-us') : $subject;
+            $message = self::render(
+                'ContactUsMailTemplate.php',
+                array(
+                    'name' => $name,
+                    'email' => $email,
+                    'subject' => $subject,
+                    'url' => $url,
+                    'comment' => $comment,
+                )
+            );
+            $headers = $this->mailHeader($to);
+			$sent = wp_mail($to, $subject, $message, $headers);
+            if ($sent) {
+                return true;
+            } else {
+                return false;
             }
 	}
-	
-	public static function SimpleMailWithAttachment(){
-        $mjEnableCaptcha    =   get_option('mjEnableCaptcha');
-        if(isset($mjEnableCaptcha) && $mjEnableCaptcha=='1') {
-            $validate   =   self::numberCaptchaValidate();
-        }else{
-            $validate   =   self::stringCaptchaValidate('single');
+
+	private function SimpleMail()
+    {
+        $mjEnableCaptcha = get_option('mjEnableCaptcha');
+        $sentToMe = true;
+        if (isset($mjEnableCaptcha) && $mjEnableCaptcha == '1') {
+            $validate = $this->numberCaptchaValidate();
+        } else {
+            $validate = $this->stringCaptchaValidate('single');
         }
 
-        if($validate){
-			if($_FILES['file']['name']!=""){
+		if ($validate) {
+
+            $name = strip_tags($_REQUEST['uname']);
+            $email = $_REQUEST['email'];
+            $subject = strip_tags($_REQUEST['subject']);
+            $url = strip_tags($_REQUEST['url']);
+            $comment = strip_tags($_REQUEST['comment']);
+            $to = (get_option('MJmailto')) ? get_option('MJmailto') : get_option('admin_email');
+            $subject = (empty($subject))? __('Contact Us Mail', 'mj-contact-us') : $subject;
+            $message = $this->render(
+                'ContactUsMailTemplate.php',
+                array(
+                    'name' => $name,
+                    'email' => $email,
+                    'subject' => $subject,
+                    'url' => $url,
+                    'comment' => $comment,
+                )
+            );
+            $headers = $this->mailHeader($to);
+            $sent = wp_mail($to, $subject, $message, $headers);
+
+            if (isset($_REQUEST['copytome']) && $_REQUEST['copytome'] == '1') {
+                $sentToMe = $this->copyToMe();
+            }
+
+            if ($sent && $sentToMe) {
+                self::setMessage(__('Mail Sent Successfully', 'mj-contact-us'), 'Success');
+            } else {
+                self::setMessage(__('Error While Sending Mail. Please Try Again Later', 'mj-contact-us'), 'error');
+            }
+        } else {
+            self::setMessage(__('Invalid Captcha', 'mj-contact-us'), 'error');
+        }
+	}
+	
+	public static function SimpleMailWithAttachment()
+    {
+        $mjEnableCaptcha = get_option('mjEnableCaptcha');
+        if (isset($mjEnableCaptcha) && $mjEnableCaptcha == '1') {
+            $validate = self::numberCaptchaValidate();
+        } else {
+            $validate = self::stringCaptchaValidate('single');
+        }
+
+        if ($validate) {
+			if ($_FILES['file']['name']!="") {
 					self::copytome();
 					$name		=	strip_tags($_REQUEST['uname']);
 					$email		=	$_REQUEST['email'];
@@ -153,7 +102,7 @@
 					$url		=	strip_tags($_REQUEST['url']);
 					$comment	=	strip_tags($_REQUEST['comment']);
 					$to			=	(get_option('MJmailto')) ? get_option('MJmailto') : get_option('admin_email');
-					$subject 	=	(empty($subject))? "Contact Us mail" : $subject;
+					$subject 	=	(empty($subject))? __('Contact Us Mail', 'mj-contact-us') : $subject;
 					
 				
 					$msg = "
@@ -199,7 +148,8 @@
             }
 	}
 	
-	 function sendEmail($name, $email, $to_mail, $subject, $msg, $attachment = "") {
+	 function sendEmail($name, $email, $to_mail, $subject, $msg, $attachment = "")
+     {
 			$sending = false;
 
 			if (!empty($attachment['tmp_name']) && !empty($attachment['error'])) $attachment['tmp_name'] = "";
@@ -260,12 +210,9 @@
 			}
     return false;
 	} 
-	
-	
-	
 
-
-	function AdminOptionProcess(){
+	function AdminOptionProcess()
+    {
 		if(isset($_POST['MJact']) && $_POST['MJact']=="insert"){
 			$MJmailto		=	(!empty($_POST['MJmailto'])) ? $_POST['MJmailto'] : get_option('admin_email');
 			$MJcopytome		=	isset($_POST['MJcopytome'])? 1 :0; 
@@ -295,7 +242,8 @@
 		}
 	}
 	
-	function AdminSwitch(){
+	function AdminSwitch()
+    {
 		switch(ACTION){
 			case 1:
 				_e('action');
@@ -308,7 +256,8 @@
 		}
 	}
 
-    public static function AddFormProcess(){
+    public static function AddFormProcess()
+    {
         $Response    =   MjFunctions::addForm();
         if($Response){
             switch($Response){
@@ -328,7 +277,8 @@
         }
     }
     
-public static function EditFormProcess(){
+public static function EditFormProcess()
+{
         $Response	=	'';
 		$Response    =   MjFunctions::EditForm();
         if($Response){
@@ -525,7 +475,8 @@ public static function EditFormProcess(){
 	}
 	
 
-    function ManageForms(){
+    function ManageForms()
+    {
 		switch(ACTION){
 			case 'add':
                 mjContactHTML::AddFormProcess();
@@ -549,9 +500,9 @@ public static function EditFormProcess(){
 
     public function stringCaptchaValidate($code	=	""){
 
-        if($_REQUEST['captcha'] ==   $_SESSION['captcha_'.$code]){
+        if ($_REQUEST['captcha'] ==  $_SESSION['captcha_'.$code]) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

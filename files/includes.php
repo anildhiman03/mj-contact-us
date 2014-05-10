@@ -1,9 +1,9 @@
 <?php 
 
-ob_start();
-$upload_dir	=	wp_upload_dir();
-/* defined variables */
+//ob_start();
+//$upload_dir	=	wp_upload_dir();
 $atn	=	(isset($_REQUEST['atn'])) ? $_REQUEST['atn'] :  '';
+
 define('NAME', 'mj-contact-us');
 define('IMGPATH' , plugins_url('/'.NAME.'/images/'));
 define('CSSPATH' , plugins_url('/'.NAME.'/css/mj.css'));
@@ -19,9 +19,8 @@ define('ACTION' , $atn);
 define('WP_CAPTCHA_DIR_URL', plugin_dir_url(__FILE__));
 define('WP_CAPTCHA_DIR', dirname(__FILE__));
 
+include( plugin_dir_path( __FILE__ ) . '/mBase.php');
 include( plugin_dir_path( __FILE__ ) . '/mj-class-functions.php');
 include( plugin_dir_path( __FILE__ ) . '/mj-class-process.php');
 include( plugin_dir_path( __FILE__ ) . '/mj-class-html.php');
 include( plugin_dir_path( __FILE__ ) . '/db.php');
-
-?>
