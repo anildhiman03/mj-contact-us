@@ -14,9 +14,8 @@
 
 <div id = 'MJContactUs'>
     <?php
-        echo Mbase::getMessage();
+    echo $message;
     ?>
-
     <script type='text/javascript'>
         jQuery(document).ready(function() { jQuery('#mailform').validate(); });
     </script>
@@ -25,23 +24,23 @@
         <form action="<?php echo get_permalink($post->ID);?>" method='post' id='mailform' enctype='multipart/form-data'>
             <div class='h-71'>
                 <label for='name'><?php _e('Name', 'mj-contact-us').$nameLbl; ?></label>
-                <input <?php echo $nameFld; ?> name='uname' id='uname' type='name' aria-required='true' value="<?php echo $this->getValue('uname'); ?>" />
+                <input <?php echo $nameFld; ?> name='uname' id='uname' type='name' aria-required='true' value="<?php echo $model->getValue('uname'); ?>" />
             </div>
             <div class='h-71'>
                 <label for='email'><?php _e('E-mail', 'mj-contact-us').$emailLbl; ?></label>
-                <input id='email' <?php echo $emailFld; ?> name='email' type='email' aria-required='true' value="<?php echo $this->getValue('email'); ?>" />
+                <input id='email' <?php echo $emailFld; ?> name='email' type='email' aria-required='true' value="<?php echo $model->getValue('email'); ?>" />
             </div>
             <div class='h-71'>
                 <label for='subject'><?php _e('Subject', 'mj-contact-us').$subjectLbl; ?></label>
-                <input id='subject' <?php echo $subjectFld; ?> name='subject' type='subject' size='30' aria-required='true' value="<?php echo $this->getValue('subject'); ?>" />
+                <input id='subject' <?php echo $subjectFld; ?> name='subject' type='subject' size='30' aria-required='true' value="<?php echo $model->getValue('subject'); ?>" />
             </div>
             <div class='h-71'>
                 <label for='url'><?php _e('Website', 'mj-contact-us').$websiteLbl; ?></label>
-                <input id='url' <?php echo $websiteFld; ?> name='url' type='url' aria-required='true' value="<?php echo $this->getValue('url'); ?>" />
+                <input id='url' <?php echo $websiteFld; ?> name='url' type='url' aria-required='true' value="<?php echo $model->getValue('url'); ?>" />
             </div>
             <div class='h-134'>
                 <label for='message'><?php _e('Comment', 'mj-contact-us').$commentLbl; ?></label>
-                <textarea id='comment' name='comment' <?php echo $commentFld; ?> cols='' rows=''><?php echo $this->getValue('comment'); ?></textarea>
+                <textarea id='comment' name='comment' <?php echo $commentFld; ?> cols='' rows=''><?php echo $model->getValue('comment'); ?></textarea>
             </div>
             <?php if (get_option('MJcopytome')==1): ?>
             <div class='h-71'>
@@ -65,7 +64,7 @@
             <?php } elseif(get_option('mjEnableCaptcha')==0) { ?>
             <div class='h-71'>
                 <label for='message'><img src="<?php echo WP_CAPTCHA_DIR_URL.'captcha_code_file.php?s=single&rand='.rand(); ?>" /></label>
-                <input id='captcha' required name='captcha' type='text'  aria-required='true' value="<?php echo $this->getValue('captcha'); ?>" />
+                <input id='captcha' required name='captcha' type='text'  aria-required='true' value="<?php echo $model->getValue('captcha'); ?>" />
             </div>
             <?php }
             if (get_option('MJattachment')):
@@ -75,7 +74,6 @@
                 <input type='file' name='file' id='file' />
             </div>
             <?php endif; ?>
-
             <div>
                 <input name='mj_submit' type='submit' id='submit' value="<?php _e('Send', 'mj-contact-us'); ?>">
                 <input type='hidden' name='mj_submit' value='active'>

@@ -9,34 +9,6 @@ class mjContactPRO
             $this->SimpleMail();
         }
 	}
-	
-	private function copyToMe()
-    {
-			$name = strip_tags($_REQUEST['uname']);
-			$email = $_REQUEST['email'];
-			$subject = strip_tags($_REQUEST['subject']);
-			$url = strip_tags($_REQUEST['url']);
-			$comment = strip_tags($_REQUEST['comment']);
-			$to = $email;
-			$subject = (empty($subject)) ? __('Contact Us Mail', 'mj-contact-us') : $subject;
-            $message = self::render(
-                'ContactUsMailTemplate.php',
-                array(
-                    'name' => $name,
-                    'email' => $email,
-                    'subject' => $subject,
-                    'url' => $url,
-                    'comment' => $comment,
-                )
-            );
-            $headers = $this->mailHeader($to);
-			$sent = wp_mail($to, $subject, $message, $headers);
-            if ($sent) {
-                return true;
-            } else {
-                return false;
-            }
-	}
 
 	private function SimpleMail()
     {
@@ -65,6 +37,7 @@ class mjContactPRO
                     'subject' => $subject,
                     'url' => $url,
                     'comment' => $comment,
+
                 )
             );
             $headers = $this->mailHeader($to);
@@ -72,18 +45,49 @@ class mjContactPRO
 
             if (isset($_REQUEST['copytome']) && $_REQUEST['copytome'] == '1') {
                 $sentToMe = $this->copyToMe();
+            } else {
+                $sentToMe = true;
             }
 
             if ($sent && $sentToMe) {
-                self::setMessage(__('Mail Sent Successfully', 'mj-contact-us'), 'Success');
+                $this->setMessage(__('Mail Sent Successfully', 'mj-contact-us'), 'success');
+                unset($_POST);
             } else {
-                self::setMessage(__('Error While Sending Mail. Please Try Again Later', 'mj-contact-us'), 'error');
+                $this->setMessage(__('Error While Sending Mail. Please Try Again Later', 'mj-contact-us'), 'error');
             }
         } else {
-            self::setMessage(__('Invalid Captcha', 'mj-contact-us'), 'error');
+            $this->setMessage(__('Invalid Captcha', 'mj-contact-us'), 'error');
         }
 	}
-	
+
+    private function copyToMe()
+    {
+        $name = strip_tags($_REQUEST['uname']);
+        $email = $_REQUEST['email'];
+        $subject = strip_tags($_REQUEST['subject']);
+        $url = strip_tags($_REQUEST['url']);
+        $comment = strip_tags($_REQUEST['comment']);
+        $to = $email;
+        $subject = (empty($subject)) ? __('Contact Us Mail', 'mj-contact-us') : $subject;
+        $message = self::render(
+            'ContactUsMailTemplate.php',
+            array(
+                'name' => $name,
+                'email' => $email,
+                'subject' => $subject,
+                'url' => $url,
+                'comment' => $comment,
+            )
+        );
+        $headers = $this->mailHeader($to);
+        $sent = wp_mail($to, $subject, $message, $headers);
+        if ($sent) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 	public static function SimpleMailWithAttachment()
     {
         $mjEnableCaptcha = get_option('mjEnableCaptcha');

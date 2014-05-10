@@ -1,9 +1,10 @@
 <?php
 class mjContactHTML extends mjContactPRO
 {
-	public  function mjForm()
+	public function mjForm()
     {
-        return $this->render('ContactUsView.php', array('this' => $this));
+        $msg = $this->getMessage();
+        return $this->render('ContactUsView.php', array('model' => $this,'message' => $msg));
     }
 
 	function AdminOption()

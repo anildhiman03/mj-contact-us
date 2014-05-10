@@ -9,14 +9,13 @@
 trait Mbase
 {
 
-
     public function __construct()
     {
         if( !session_id() ) @session_start();
         if( !array_key_exists('flash_messages', $_SESSION) ) $_SESSION['flash_messages'] = '';
     }
 
-    public function render($file, $variables = array())
+    public static function render($file, $variables = array())
     {
         extract($variables);
         $filePath = plugin_dir_path( dirname( __FILE__ ) )."views/".$file;
@@ -30,56 +29,47 @@ trait Mbase
         return $renderedView;
     }
 
-    private function setMsg($key = null, $message = null)
+    private function setMsg($message = null)
     {
-        if ($key == null || $message == null) {
+        if ($message == null) {
             return false;
         }
 
-        $this->sessionStart();
-
-        $_SESSION[$key] = $message;
-        if ($this->getMsg($key)) {
+        $_SESSION['flash_messages'] = $message;
+        if ($this->getMsg()) {
             return true;
         } else {
             return false;
         }
     }
 
-    private function getMsg($key = null)
+    private function getMsg()
     {
-        if ($key == null) {
-            return false;
-        }
-
-        self::sessionStart();
-
-        if (isset($_SESSION[$key])) {
-            $msg = $_SESSION[$key];
+        if (isset($_SESSION['flash_messages'])) {
+            $msg = $_SESSION['flash_messages'];
         } else {
             $msg = false;
         }
         return $msg;
     }
 
-    public function setMessage($message = null , $type = "Success")
+    public function setMessage($message = null , $type = "success")
     {
         if ($message == null) {
             return false;
         }
         $key = 'msg';
-        if ($type == "Success") {
+        if ($type == "success") {
             $message = "<div class='updatedcss' id='message'><label>$message</label></div>";
         } else {
             $message = "<div class='error p-12' id='message'><label>$message</label></div>";
         }
-        return self::setMsg($key, $message);
+        return $this->setMsg($message);
     }
 
     public function getMessage()
     {
-        $msg = self::getMsg('msg');
-
+        $msg = $this->getMsg();
         if ($msg) {
             return $msg;
         } else  {
