@@ -9,40 +9,10 @@ class mjContactHTML extends mjContactPRO
 
 	function AdminOption()
     {
-        ?>
-		<div id="wrap">
-			<div id="container">
-				<h3 id="reply-title"><?php _e('Contact US Page Settings') ;?></h3>
-				<form action="" method="post" id="mailform">
-					<div class="h-43">
-						<label for="name"><?php _e('Email Address to recieve Email address') ;?></label>
-						<input name="MJmailto" class="f-13" id="mailto" type="text" aria-required="true" value="<?php echo get_option('MJmailto');?>" >
-						<small><i><?php _e('if blank then default mail will goes on '.get_option('admin_email'));?></i></small>
-					</div>
-					<div class="h-43">
-						<label for="name"><?php _e('Copy to me') ;?></label>
-						<input type="checkbox" class="w-16" name="MJcopytome" <?php echo (get_option('MJcopytome')==1)? "checked='checked'" : "";?> value="1"> <?php _e('Enable this option ?'); ?>
-					</div>
-					<div class="h-100">
-						<label for="name"><?php _e('Other options') ;?></label>
-						<input type="checkbox" class="w-16" name="MJname" <?php echo (get_option('MJname')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Name ?') ;?><br/>
-						<input type="checkbox" class="w-16" name="MJemail" <?php echo (get_option('MJemail')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Email ?') ;?><br/>
-						<input type="checkbox" class="w-16" name="MJsubject" <?php echo (get_option('MJsubject')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Subject ?') ;?><br/>
-						<input type="checkbox" class="w-16" name="MJwebsite" <?php echo (get_option('MJwebsite')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Website ?') ;?><br/>
-						<input type="checkbox" class="w-16" name="MJcomment" <?php echo (get_option('MJcomment')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Required Comment ?') ;?><br/>
-						<!--<input type="checkbox" class="w-16" name="MJattachment" <?php echo (get_option('MJattachment')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Enable  Attachment ?') ;?><br/>-->
-                        <input type="radio" class="w-16" name="mjEnableCaptcha" <?php echo (get_option('mjEnableCaptcha')==1)? "checked='checked'" : "";?> value="1"><?php _e(' - Enable  number captcha') ;?><br/>
-                        <input type="radio" class="w-16" name="mjEnableCaptcha" <?php echo (get_option('mjEnableCaptcha')==0)? "checked='checked'" : "";?> value="0"><?php _e(' - Enable  string captcha') ;?><br/>
-					</div>
-					<div>
-						<input name="MJact" type="hidden" id="MJact" value="insert">
-						<input name="Save" type="submit" id="Save" value="<?php _e('Save') ;?>">
-					</div>
-				</form>
-			</div>
-		</div>	
-	<?php
+        $msg = $this->getMessage();
+        return $this->render('admin/home.php', array('model' => $this,'message' => $msg));
 	}
+
 	public static function getFormList(){
 	
 	?>	

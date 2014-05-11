@@ -45,6 +45,16 @@ function my_jquery_enqueue()
     wp_enqueue_script('jQuery.validation');
 }
 
+function load_custom_wp_admin_style($hook) {
+    if( 'toplevel_page_mj-home' != $hook )
+        return;
+
+    global $wp_styles;
+       $wp_styles->add('mj', plugins_url( '/css/mjCont.css', __FILE__ ) );
+       $wp_styles->enqueue(array('mj'));
+}
+
+add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
 
 function mjContactUs()
 {
@@ -57,16 +67,16 @@ function mjContactUs()
 
 function AdminIndex()
 {
-    add_menu_page('Contact US', 'Contact US', 'manage_options', 'mj-mainpage', 'AdminMainPage');
-    add_submenu_page( 'mj-mainpage', 'Mj Contact form', 'Contact Forms', 'manage_options', 'mj-contact-forms', 'MjContactForms');
-    add_submenu_page( 'mj-mainpage', 'Mj Contact fields', 'Contact Field', 'manage_options', 'mj-contact-fields', 'MjContactFields');
-    add_submenu_page( 'mj-mainpage', 'Mj store fields', 'Stored Data', 'manage_options', 'mj-store-fields', 'MjContactStoreForms');
+    add_menu_page('Contact US', 'Contact US', 'manage_options', 'mj-home', 'AdminMainPage');
+    add_submenu_page( 'mj-home', 'Mj Contact form', 'Contact Forms', 'manage_options', 'mj-contact-forms', 'MjContactForms');
+    add_submenu_page( 'mj-home', 'Mj Contact fields', 'Contact Field', 'manage_options', 'mj-contact-fields', 'MjContactFields');
+    add_submenu_page( 'mj-home', 'Mj store fields', 'Stored Data', 'manage_options', 'mj-store-fields', 'MjContactStoreForms');
 }
 
 function AdminMainPage()
 {
     $MjObj	=	new mjContactHTML;
-    $MjObj->AdminSwitch();
+    echo $MjObj->AdminSwitch();
 }
 
 

@@ -89,3 +89,54 @@ msgstr "Comment :"
 
 msgid "Error While Sending Mail. Please Try Again Later"
 msgstr "Error While Sending Mail. Please Try Again Later"
+
+# admin string start
+msgid "Contact US Page Settings"
+msgstr "Contact US Page Settings"
+
+msgid "Email Address to receive Email address"
+msgstr "Email Address to receive Email address"
+
+msgid "if blank then default mail will goes on"
+msgstr "if blank then default mail will goes on"
+
+msgid "Copy to me"
+msgstr "Copy to me"
+
+msgid "Other options"
+msgstr "Other options"
+
+msgid "Enable this option ?"
+msgstr "Enable this option ?"
+
+msgid " - Required Name ?"
+msgstr " - Required Name ?"
+
+msgid " - Required Email ?"
+msgstr " - Required Email ?"
+
+msgid " - Required Subject ?"
+msgstr " - Required Subject ?"
+
+msgid " - Required Website ?"
+msgstr " - Required Website ?"
+
+msgid " - Required Comment ?"
+msgstr " - Required Comment ?"
+
+msgid " - Enable  Attachment ?"
+msgstr " - Enable  Attachment ?"
+
+msgid " - Enable  number captcha"
+msgstr " - Enable  number captcha"
+
+msgid " - Enable  string captcha"
+msgstr " - Enable  string captcha"
+
+msgid "Success : Data save successfully"
+msgstr "Success : Data save successfully"
+
+msgid "Error : Please enter valid email address"
+msgstr "Error : Please enter valid email address"
+
+# admin string end

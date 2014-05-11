@@ -217,31 +217,30 @@ class mjContactPRO
 
 	function AdminOptionProcess()
     {
-		if(isset($_POST['MJact']) && $_POST['MJact']=="insert"){
-			$MJmailto		=	(!empty($_POST['MJmailto'])) ? $_POST['MJmailto'] : get_option('admin_email');
-			$MJcopytome		=	isset($_POST['MJcopytome'])? 1 :0; 
-			$MJname			=	isset($_POST['MJname'])? 1 :0;
-			$MJemail		=	isset($_POST['MJemail'])? 1 :0;
-			$MJsubject		=	isset($_POST['MJsubject'])? 1 :0;
-			$MJwebsite		=	isset($_POST['MJwebsite'])? 1 :0;
-			$MJcomment		=	isset($_POST['MJcomment'])? 1 :0;
-			$MJattachment	=	isset($_POST['MJattachment'])? 1 :0;
-			$Captcha	    =	$_POST['mjEnableCaptcha'];
+		if (isset($_POST['action']) && $_POST['action'] == "insert") {
+			$mailTo		    =	(!empty($_POST['to'])) ? $_POST['to'] : get_option('admin_email');
+			$copyToMe		=	isset($_POST['copy'])? 1 :0;
+			$name			=	isset($_POST['name'])? 1 :0;
+			$email		    =	isset($_POST['email'])? 1 :0;
+			$subject		=	isset($_POST['subject'])? 1 :0;
+			$website		=	isset($_POST['website'])? 1 :0;
+			$comment		=	isset($_POST['comment'])? 1 :0;
+			$attachment	    =	isset($_POST['attachment'])? 1 :0;
+			$captcha	    =	$_POST['captcha'];
 
-			if(is_email($MJmailto)){
-				update_option('MJmailto',$MJmailto);
-				update_option('MJcopytome',$MJcopytome);
-				update_option('MJname',$MJname);
-				update_option('MJemail',$MJemail);
-				update_option('MJsubject',$MJsubject);
-				update_option('MJwebsite',$MJwebsite);
-				update_option('MJcomment',$MJcomment);
-				update_option('MJattachment',$MJattachment);
-				update_option('mjEnableCaptcha',$Captcha);
-				echo "<div class='updated p-12' id='message'><div class='p-12'>Success : Data saved Successfully</div></div>";
-				
-			}else{
-				echo "<div class='error'><div class='p-12'>Error : Please enter valid email address</div></div>";
+			if(is_email($mailTo)){
+				update_option('MJmailto',$mailTo);
+				update_option('MJcopytome',$copyToMe);
+				update_option('MJname',$name);
+				update_option('MJemail',$email);
+				update_option('MJsubject',$subject);
+				update_option('MJwebsite',$website);
+				update_option('MJcomment',$comment);
+				update_option('MJattachment',$attachment);
+				update_option('mjEnableCaptcha',$captcha);
+                $this->setMessage('<p>'.__('Success : Data save successfully', 'mj-contact-us').'</p>', 'success');
+			} else {
+                $this->setMessage('<p>'.__('Error : Please enter valid email address', 'mj-contact-us').'</p>', 'error');
 			}
 		}
 	}
@@ -252,10 +251,9 @@ class mjContactPRO
 			case 1:
 				_e('action');
 			break;
-			
 			default : 
 				self::AdminOptionProcess();
-				mjContactHTML::AdminOption();
+				return mjContactHTML::AdminOption();
 			break;
 		}
 	}

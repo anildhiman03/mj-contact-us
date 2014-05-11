@@ -14,7 +14,7 @@
 
 <div id = 'MJContactUs'>
     <?php
-    echo $message;
+        echo $message;
     ?>
     <script type='text/javascript'>
         jQuery(document).ready(function() { jQuery('#mailform').validate(); });

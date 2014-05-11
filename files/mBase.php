@@ -53,14 +53,14 @@ trait Mbase
         return $msg;
     }
 
-    public function setMessage($message = null , $type = "success")
+    public function setMessage($message = null , $type = "success", $location = 'front')
     {
         if ($message == null) {
             return false;
         }
         $key = 'msg';
         if ($type == "success") {
-            $message = "<div class='updatedcss' id='message'><label>$message</label></div>";
+            $message = "<div class='updatedcss updated below-h2' id='message'><label>$message</label></div>";
         } else {
             $message = "<div class='error p-12' id='message'><label>$message</label></div>";
         }
@@ -71,6 +71,7 @@ trait Mbase
     {
         $msg = $this->getMsg();
         if ($msg) {
+            $this->cleanMsg();
             return $msg;
         } else  {
             return false;
@@ -104,6 +105,11 @@ trait Mbase
         if ($exit) {
             exit;
         }
+    }
+
+    public function cleanMsg()
+    {
+        $_SESSION['flash_messages'] = '';
     }
 
 } 

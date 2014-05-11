@@ -40,3 +40,64 @@
 #MJContactUs #mjContact table td{height: 40px;}
 #MJContactUs #mjContact table td:first-child{font-weight:bold;}
 #MJContactUs .Eerror {background: none repeat scroll 0 0 #EEE;border: 1px solid #D3D3D3;border-radius: 3px 3px 3px 3px;margin: 0 auto 1.625em;padding: 0.625em;position: relative;width: 94.9%;color: #000;}
+
+/*admin scss*/
+
+#sizer {
+    background: url("../assets/highlight.png") no-repeat scroll 50% 0 rgba(0, 0, 0, 0);
+    margin: 0 auto;
+    padding: 62px 200px 240px;
+    width: 340px;
+    color: #FFFFFF;
+}
+
+#sizer form {
+    background: url("../assets/box-grad.png") repeat-x scroll 0 0 #4F84B8;
+    border-radius: 10px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+    margin-bottom: 18px;
+    padding: 18px 20px 0;
+    width: 300px;
+}
+#sizer fieldset {
+    border: 0 none;
+    padding-bottom: 9px;
+}
+#sizer label {
+    cursor: pointer;
+    display: block;
+    line-height: 20px;
+    padding-bottom: 9px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+#sizer .radios {
+    background: url("../assets/divider.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    padding-top: 18px;
+}
+#sizer .label_check input, .label_radio input {
+    margin-right: 5px;
+}
+
+#sizer #footer a:hover, #sizer #footer a:focus {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+}
+#sizer .has-js .label_check, .has-js .label_radio {
+    padding-left: 34px;
+}
+#sizer .has-js .label_radio {
+    background: url("../assets/radio-off.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+#sizer .has-js .label_check {
+    background: url("../assets/check-off.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+#sizer .has-js label.c_on {
+    background: url("../assets/check-on.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+#sizer .has-js label.r_on {
+    background: url("../assets/radio-on.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+#sizer .has-js .label_check input, .has-js .label_radio input {
+    left: -9999px;
+    position: absolute;
+}
