@@ -53,7 +53,7 @@ trait Mbase
         return $msg;
     }
 
-    public function setMessage($message = null , $type = "success", $location = 'front')
+    public function setMessage($message = null , $type = "success")
     {
         if ($message == null) {
             return false;
@@ -112,4 +112,22 @@ trait Mbase
         $_SESSION['flash_messages'] = '';
     }
 
+    public function set_html_content_type()
+    {
+        return 'text/html';
+    }
+
+    public function moveUploadedFile($tempName = null,$fileName = null)
+    {
+        if($tempName == null  || $fileName == null) {
+            return false;
+        }
+        $uploadDir = UPLOAD.$fileName;
+        $uploaded = move_uploaded_file($tempName, $uploadDir);
+        if($uploaded) {
+            return $uploadDir;
+        } else {
+            return 0;
+        }
+    }
 } 

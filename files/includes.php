@@ -1,13 +1,11 @@
-<?php 
-
-//ob_start();
-//$upload_dir	=	wp_upload_dir();
+<?php
+$upload_dir	=	wp_upload_dir();
 $atn	=	(isset($_REQUEST['atn'])) ? $_REQUEST['atn'] :  '';
-
 define('NAME', 'mj-contact-us');
 define('IMGPATH' , plugins_url('/'.NAME.'/images/'));
 define('CSSPATH' , plugins_url('/'.NAME.'/css/mj.css'));
 define('URL' , admin_url('admin.php?page=mj-home'));
+define('UPLOAD' , $upload_dir['basedir'].'/mjupload/');
 define('FORMURL' , admin_url('admin.php?page=mj-contact-forms'));
 define('ADDFORM' , add_query_arg(array('atn'=>'add'), admin_url('admin.php?page=mj-contact-forms')));
 define('EDITFORM' , add_query_arg(array('atn'=>'edit'), admin_url('admin.php?page=mj-contact-forms')));

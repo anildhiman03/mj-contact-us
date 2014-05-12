@@ -22,34 +22,34 @@
 
     <div id='container' class='mjcontactus'>
         <form action="<?php echo get_permalink($post->ID);?>" method='post' id='mailform' enctype='multipart/form-data'>
-            <div class='h-71'>
+            <div class='mb-2'>
                 <label for='name'><?php _e('Name', 'mj-contact-us').$nameLbl; ?></label>
                 <input <?php echo $nameFld; ?> name='uname' id='uname' type='name' aria-required='true' value="<?php echo $model->getValue('uname'); ?>" />
             </div>
-            <div class='h-71'>
+            <div class='mb-2'>
                 <label for='email'><?php _e('E-mail', 'mj-contact-us').$emailLbl; ?></label>
                 <input id='email' <?php echo $emailFld; ?> name='email' type='email' aria-required='true' value="<?php echo $model->getValue('email'); ?>" />
             </div>
-            <div class='h-71'>
+            <div class='mb-2'>
                 <label for='subject'><?php _e('Subject', 'mj-contact-us').$subjectLbl; ?></label>
-                <input id='subject' <?php echo $subjectFld; ?> name='subject' type='subject' size='30' aria-required='true' value="<?php echo $model->getValue('subject'); ?>" />
+                <input id='subject' <?php echo $subjectFld; ?> name='subject' type='subject' aria-required='true' value="<?php echo $model->getValue('subject'); ?>" />
             </div>
-            <div class='h-71'>
+            <div class='mb-2'>
                 <label for='url'><?php _e('Website', 'mj-contact-us').$websiteLbl; ?></label>
                 <input id='url' <?php echo $websiteFld; ?> name='url' type='url' aria-required='true' value="<?php echo $model->getValue('url'); ?>" />
             </div>
-            <div class='h-134'>
+            <div class='mb-2'>
                 <label for='message'><?php _e('Comment', 'mj-contact-us').$commentLbl; ?></label>
                 <textarea id='comment' name='comment' <?php echo $commentFld; ?> cols='' rows=''><?php echo $model->getValue('comment'); ?></textarea>
             </div>
             <?php if (get_option('MJcopytome')==1): ?>
-            <div class='h-71'>
+            <div class='mb-2'>
                 <label for='message'><?php _e('Send copy to me', 'mj-contact-us'); ?></label>
                 <input type='checkbox' name='copytome' class='w-16' id='copytome' value='1'>
             </div>
             <?php
             endif;
-            if (get_option('l')==1) {
+            if (get_option('mjEnableCaptcha')==1) {
             ?>
             <div class='h-71'>
                 <label for='message'>

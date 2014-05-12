@@ -71,6 +71,9 @@ msgstr "Hello Admin"
 msgid "Please find the details of contact us mail send by a new user"
 msgstr "Please find the details of contact us mail send by a new user"
 
+msgid "Please also file attachment sent by user with this mail"
+msgstr "Please also file attachment sent by user with this mail"
+
 msgid "Name :"
 msgstr "Name :"
 
@@ -85,6 +88,10 @@ msgstr "Website :"
 
 msgid "Comment :"
 msgstr "Comment :"
+
+msgid "Attachment Name :"
+msgstr "Attachment Name :"
+
 # END - admin contact us mail template keywords
 
 msgid "Error While Sending Mail. Please Try Again Later"
