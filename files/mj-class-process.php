@@ -153,27 +153,38 @@ class mjContactPRO
 
 	function AdminOptionProcess()
     {
-		if (isset($_POST['action']) && $_POST['action'] == "insert") {
-			$mailTo		    =	(!empty($_POST['to'])) ? $_POST['to'] : get_option('admin_email');
-			$copyToMe		=	isset($_POST['copy'])? 1 :0;
-			$name			=	isset($_POST['name'])? 1 :0;
-			$email		    =	isset($_POST['email'])? 1 :0;
-			$subject		=	isset($_POST['subject'])? 1 :0;
-			$website		=	isset($_POST['website'])? 1 :0;
-			$comment		=	isset($_POST['comment'])? 1 :0;
-			$attachment	    =	isset($_POST['attachment'])? 1 :0;
-			$captcha	    =	$_POST['captcha'];
 
-			if(is_email($mailTo)){
-				update_option('MJmailto',$mailTo);
-				update_option('MJcopytome',$copyToMe);
-				update_option('MJname',$name);
-				update_option('MJemail',$email);
-				update_option('MJsubject',$subject);
-				update_option('MJwebsite',$website);
-				update_option('MJcomment',$comment);
-				update_option('MJattachment',$attachment);
-				update_option('mjEnableCaptcha',$captcha);
+		if (isset($_POST['action']) && $_POST['action'] == "insert") {
+			$this->dump(true);
+            $mjMailTo	=	(!empty($_POST['mj-mail-to'])) ? $_POST['mj-mail-to'] : get_option('admin_email');
+			$mjCopyMe = isset($_POST['mj-copy-me'])? 1 : 0;
+            $enableName = isset($_POST['enable-name'])? 1 : 0;
+            $requireName = isset($_POST['require-name'])? 1 : 0;
+            $enableEmail = isset($_POST['enable-email'])? 1 : 0;
+            $requireEmail = isset($_POST['require-email'])? 1 : 0;
+            $enableWebsite = isset($_POST['enable-website'])? 1 : 0;
+            $requireWebsite = isset($_POST['require-website'])? 1 : 0;
+            $enableComment = isset($_POST['enable-comment'])? 1 : 0;
+            $requireComment = isset($_POST['require-comment'])? 1 : 0;
+            $enableAttachment = isset($_POST['enable-attachment'])? 1 : 0;
+            $requireAttachment = isset($_POST['require-attachment'])? 1 : 0;
+            $captchaNumber = isset($_POST['captcha-number'])? 1 : 0;
+            $captchaString = isset($_POST['captcha-string'])? 1 : 0;
+
+			if(is_email($mjMailTo)){
+                update_option('mj_copy_me', $mjCopyMe);
+                update_option('mj_enable_name', $enableName);
+                update_option('mj_require_name', $requireName);
+                update_option('mj_enable_email', $enableEmail);
+                update_option('mj_require_email', $requireEmail);
+                update_option('mj_enable_website', $enableWebsite);
+                update_option('mj_require_website', $requireWebsite);
+                update_option('mj_enable_comment', $enableComment);
+                update_option('mj_require_comment', $requireComment);
+                update_option('mj_enable_attachment', $enableAttachment);
+                update_option('mj_require_attachment', $requireAttachment);
+                update_option('mj_captcha_number', $captchaNumber);
+                update_option('mj_string_number', $captchaString);
                 $this->setMessage('<p>'.__('Success : Data save successfully', 'mj-contact-us').'</p>', 'success');
 			} else {
                 $this->setMessage('<p>'.__('Error : Please enter valid email address', 'mj-contact-us').'</p>', 'error');
@@ -211,14 +222,14 @@ class mjContactPRO
                 default:
                     $errorCode  =   'E-FRM-INVALID';
             }
-            MjFunctions::message($errorCode);  //MjFunctions::mRedirect($errorCode,ADDFORM);
+            MjFunctions::message($errorCode);
         }
     }
     
-public static function EditFormProcess()
-{
+    public static function EditFormProcess()
+    {
         $Response	=	'';
-		$Response    =   MjFunctions::EditForm();
+        $Response    =   MjFunctions::EditForm();
         if($Response){
             switch($Response){
                 case "EmptyFormName":
@@ -234,11 +245,11 @@ public static function EditFormProcess()
                     $errorCode  =   'E-FRM-INVALID';
                     break;
             }
-			#$url    =   add_query_arg(array('id'=>$_REQUEST['id']), EDITFORM);
+            #$url    =   add_query_arg(array('id'=>$_REQUEST['id']), EDITFORM);
             MjFunctions::message($errorCode);	#MjFunctions::mRedirect($errorCode,$url);
         }
     }
-	
+
     public static function updateFormStatusProcess(){
         $Response    =   MjFunctions::updateFormStatus();
         if($Response){

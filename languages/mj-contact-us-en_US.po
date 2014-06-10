@@ -113,6 +113,12 @@ msgstr "Copy to me"
 msgid "Other options"
 msgstr "Other options"
 
+msgid "Enable"
+msgstr "Enable"
+
+msgid "Require"
+msgstr "Require"
+
 msgid "Enable this option ?"
 msgstr "Enable this option ?"
 
@@ -145,5 +151,9 @@ msgstr "Success : Data save successfully"
 
 msgid "Error : Please enter valid email address"
 msgstr "Error : Please enter valid email address"
+
+
+msgid "Enable `Copy to me` option"
+msgstr "Enable `Copy to me` option"
 
 # admin string end

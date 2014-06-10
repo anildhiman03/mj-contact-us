@@ -2,46 +2,83 @@
     <?php echo $message; ?>
     <div id="sizer">
         <div class="has-js">
-            <form accept-charset="utf-8" action="" method="post" id="mailform">
+            <form accept-charset="utf-8" action="" method="post" id="mj_mail_form">
                 <fieldset class="checkboxes">
                     <label for="checkbox-01" class="">
-                        <input name="to" class="f-13" id="to" size="33" type="text" aria-required="true" value="<?php echo get_option('MJmailto');?>" >
+                        <input name="mj-mail-to" class="f-13" id="mj-mail-to" size="33" type="text" aria-required="true" value="<?php echo get_option('mj_mail_to');?>" >
                         <br/><i><small><?php _e('Email Address to receive mails', 'mj-contact-us') ;?></small></i>
+                    </label>
+                    <label for="checkbox-01" class="">
+                        <input type="checkbox" <?php echo (get_option('mj_copy_me')==1)? "checked='checked'" : "";?> value="1" id="mj-copy-me" name="mj-copy-me" >
+                        <?php _e('Enable `Copy to me` option', 'mj-contact-us') ;?>
                     </label>
                 </fieldset>
                 <fieldset class="radios">
-                    <label for="checkbox-01" class="">
-                        <input type="checkbox" <?php echo (get_option('MJcopytome')==1)? "checked='checked'" : "";?> value="1" id="checkbox-01" name="copy" >
-                        <?php _e('Enable `Copy to me` option?', 'mj-contact-us') ;?>
-                    </label>
-                    <label for="checkbox-02" class="">
-                        <input type="checkbox" class="w-16" name="name" <?php echo (get_option('MJname')==1)? "checked='checked'" : "";?> value="1">
-                        <?php _e(' - Required Name ?', 'mj-contact-us') ;?>
-                    </label>
-                    <label for="checkbox-03" class="">
-                        <input type="checkbox" class="w-16" name="email" <?php echo (get_option('MJemail')==1)? "checked='checked'" : "";?> value="1">
-                        <?php _e(' - Required Email ?', 'mj-contact-us') ;?>
-                    </label>
-                    <label for="checkbox-04" class="">
-                        <input type="checkbox" class="w-16" name="website" <?php echo (get_option('MJwebsite')==1)? "checked='checked'" : "";?> value="1">
-                        <?php _e(' - Required Website ?', 'mj-contact-us') ;?>
-                    </label>
-                    <label for="checkbox-05" class="">
-                        <input type="checkbox" class="w-16" name="comment" <?php echo (get_option('MJcomment')==1)? "checked='checked'" : "";?> value="1">
-                        <?php _e(' - Required Comment ?', 'mj-contact-us') ;?>
-                    </label>
-                    <label for="checkbox-06" class="">
-                        <input type="checkbox" class="w-16" name="attachment" <?php echo (get_option('MJattachment')==1)? "checked='checked'" : "";?> value="1">
-                        <?php _e(' - Enable  Attachment ?', 'mj-contact-us') ;?>
-                    </label>
+                    <table>
+                        <tr>
+                            <td><?php _e('Name :', 'mj-contact-us') ;?></td>
+                            <td>
+                                <input type="checkbox" class="w-16" name="enable-name" <?php echo (get_option('mj_name_enable')==1)? "checked='checked'" : "";?> value="1">
+                                <?php _e('Enable', 'mj-contact-us'); ?>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="w-16" name="require-name" <?php echo (get_option('mj_name_require')==1)? "checked='checked'" : "";?> value="1">
+                                <?php _e('Require', 'mj-contact-us') ;?>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td><?php _e('Email :', 'mj-contact-us') ;?></td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="enable-email" <?php echo (get_option('mj_email_enable')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Enable ', 'mj-contact-us') ;?>
+                        </td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="require-email" <?php echo (get_option('mj_email_require')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Require', 'mj-contact-us') ;?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Website :', 'mj-contact-us') ;?></td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="enable-website" <?php echo (get_option('mj_website_enable')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Enable', 'mj-contact-us') ;?>
+                        </td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="require-website" <?php echo (get_option('mj_require_enable')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Require', 'mj-contact-us') ;?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Comment :', 'mj-contact-us') ;?></td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="enable-comment" <?php echo (get_option('mj_enable_comment')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Enable', 'mj-contact-us') ;?>
+                        </td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="require-comment" <?php echo (get_option('mj_require_comment')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Require', 'mj-contact-us') ;?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Attachment', 'mj-contact-us') ;?></td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="enable-attachment" <?php echo (get_option('mj_attachment_enable')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Enable', 'mj-contact-us') ;?>
+                        </td>
+                        <td>
+                            <input type="checkbox" class="w-16" name="require-attachment" <?php echo (get_option('mj_attachment_enable')==1)? "checked='checked'" : "";?> value="1">
+                            <?php _e('Require', 'mj-contact-us') ;?>
+                        </td>
+                    </tr>
+                </table>
                 </fieldset>
                 <fieldset class="radios">
                     <label for="radio-01" class="">
-                        <input type="radio" class="w-16" name="captcha" <?php echo (get_option('mjEnableCaptcha')==1)? "checked='checked'" : "";?> value="1">
+                        <input type="radio" class="w-16" name="captcha-number" <?php echo (get_option('mj_enable_number_captcha')==1)? "checked='checked'" : "";?> value="1">
                         <?php _e(' - Enable  number captcha', 'mj-contact-us') ;?><br/>
                     </label>
                     <label for="radio-02" class="">
-                        <input type="radio" class="w-16" name="captcha" <?php echo (get_option('mjEnableCaptcha')==0)? "checked='checked'" : "";?> value="0">
+                        <input type="radio" class="w-16" name="captcha-string" <?php echo (get_option('mj_string_number_captcha')==1)? "checked='checked'" : "";?> value="1">
                         <?php _e(' - Enable  string captcha', 'mj-contact-us') ;?><br/>
                     </label>
                 </fieldset>
